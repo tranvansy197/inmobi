@@ -31,6 +31,7 @@ public class SecurityConfig {
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final UserDetailCustomService userDetailCustomService;
     private final JwtTokenProvider jwtTokenProvider;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -38,10 +39,10 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/public/**", "/login")
-//                        .permitAll()
-                        .anyRequest()
+                        .requestMatchers("/auth/**", "/vnpay-payment/**")
                         .permitAll()
+                        .anyRequest()
+                        .authenticated()
                 )
                 .addFilterBefore(new JwtFilter(jwtTokenProvider, userDetailCustomService), UsernamePasswordAuthenticationFilter.class);
 

@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.model.LeaderboardEntry;
 import com.example.demo.dto.model.PaymentStatus;
 import com.example.demo.dto.model.UserInfo;
 import com.example.demo.service.UserService;
@@ -27,7 +28,7 @@ public class UserController {
 
     @GetMapping("/leaderboard")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<UserInfo>> getTopScoreUsers() {
+    public ResponseEntity<List<LeaderboardEntry>> getTopScoreUsers() {
         var users = userService.getTopScoreUsers();
         return ResponseEntity.ok(users);
     }

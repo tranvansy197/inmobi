@@ -8,6 +8,7 @@ import com.example.demo.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -19,7 +20,7 @@ public class UserDetailCustomService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) {
         User user = userRepository.findByEmail(username)
-                .orElseThrow(() -> new AuthenticationException("User not found."));
+                .orElseThrow(() -> new UsernameNotFoundException("User not found " + username));
         Role role = roleRepository.findByRoleId(user.getRoleId())
                 .orElseThrow(() -> new AuthenticationException("Role not found."));
 

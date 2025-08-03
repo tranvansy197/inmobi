@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class GameController {
 
     private final GameService gameService;
-    private final VNPayService vnPayService;
 
     @PostMapping("/guess")
     @PreAuthorize("isAuthenticated()")
